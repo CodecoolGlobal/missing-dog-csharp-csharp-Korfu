@@ -140,7 +140,7 @@ namespace Codecool.MissingDog.UnitTests
         public void TestGetOwnerPhoneNoByDogIdWhenNullDog()
         {
             var result = _dogRepository.GetOwnerPhoneNoByDogId(100);
-            const string expected = "Missing data";
+            const string expected = "missing data";
 
             Assert.AreEqual(expected, result);
         }

@@ -27,7 +27,7 @@ namespace Codecool.MissingDog.Repository
         /// <returns> IEnumerable of all Dogs instances and nulls. </returns>
         public IEnumerable<Dog> GetAllDogs()
         {
-            throw new NotImplementedException();
+            return _data.Dogs;
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Codecool.MissingDog.Repository
         /// <returns> Dog instance or null. </returns>
         public Dog GetDogById(int id)
         {
-            throw new NotImplementedException();
+            return _data.Dogs.FirstOrDefault(dog => dog?.Id == id);
         }
 
         /// <summary>
@@ -47,7 +47,9 @@ namespace Codecool.MissingDog.Repository
         /// <returns> Integer, representing Dogs count. </returns>
         public int GetCountOfDogsForTheOwnerOfDogWithId(int dogId)
         {
-            throw new NotImplementedException();
+            var owner = _data.Dogs.FirstOrDefault(dog => dog?.Id == dogId)?.Owner;
+            var ownerDogCount = owner?.Dogs?.Where(dog => dog != null)?.Count() ?? 0;
+            return ownerDogCount;
         }
 
         /// <summary>
@@ -57,7 +59,9 @@ namespace Codecool.MissingDog.Repository
         /// <returns> String, representing phone number. </returns>
         public string GetOwnerPhoneNoByDogId(int dogId)
         {
-            throw new NotImplementedException();
+            var dog = _data.Dogs.FirstOrDefault(dog => dog?.Id == dogId);
+            var phone = dog?.Owner?.PhoneNumber;
+            return dog != null ? phone ?? "Missing data" : "missing data";
         }
 
         /// <summary>
@@ -67,7 +71,7 @@ namespace Codecool.MissingDog.Repository
         /// <returns> IEnumerable of Dogs instances. </returns>
         public IEnumerable<Dog> GetDogsBySociability(bool isSociable)
         {
-            throw new NotImplementedException();
+            return _data.Dogs?.Where(dog => dog?.IsSociable == isSociable);
         }
     }
 }
