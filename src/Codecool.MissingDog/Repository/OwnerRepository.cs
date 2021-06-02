@@ -27,7 +27,7 @@ namespace Codecool.MissingDog.Repository
         /// <returns> IEnumerable of all Owners instances and nulls. </returns>
         public IEnumerable<Owner> GetAllOwners()
         {
-            throw new NotImplementedException();
+            return _data.Owners;
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Codecool.MissingDog.Repository
         /// <returns> Owner instance or null. </returns>
         public Owner GetOwnerById(int id)
         {
-            throw new NotImplementedException();
+            return _data.Owners.FirstOrDefault(owner => owner?.Id == id);
         }
 
         /// <summary>
@@ -48,7 +48,9 @@ namespace Codecool.MissingDog.Repository
         /// <returns> Integer, representing count of Dogs. </returns>
         public int GetCountOfDogsOfSpecificBreedThisOwnerHas(int breedId, int ownerId)
         {
-            throw new NotImplementedException();
+            var owner = GetOwnerById(ownerId);
+            var numberOfBreeds = owner?.Dogs?.Where(dog => dog != null).Count(dog => dog.Breed.Id == breedId) ?? 0;
+            return numberOfBreeds;
         }
 
         /// <summary>
@@ -58,7 +60,8 @@ namespace Codecool.MissingDog.Repository
         /// <returns> Double, representing average level. </returns>
         public double CountAverageActivityLevelOfThisOwnersDogs(int ownerId)
         {
-            throw new NotImplementedException();
+            var owner = GetOwnerById(ownerId);
+            return owner.Dogs.Where(dog => dog != null).Average(dog => dog.Breed.ActivityLevel);
         }
 
         /// <summary>
@@ -68,7 +71,9 @@ namespace Codecool.MissingDog.Repository
         /// <returns> Dog instance or null </returns>
         public Dog GetOldestDogOfThisOwner(int ownerId)
         {
-            throw new NotImplementedException();
+            var owner = GetOwnerById(ownerId);
+            var oldestDog = owner.Dogs.Where(dog => dog != null).OrderBy(dog => dog?.DateOfBirth).FirstOrDefault();
+            return oldestDog;
         }
 
         /// <summary>
@@ -78,7 +83,8 @@ namespace Codecool.MissingDog.Repository
         /// <returns> Integer, representing Dogs count. </returns>
         public int CountDogsOfThisOwners(int ownerId)
         {
-            throw new NotImplementedException();
+            var owner = GetOwnerById(ownerId);
+            return (int) owner.Dogs.Where(dog => dog != null)?.Count();
         }
     }
 }
